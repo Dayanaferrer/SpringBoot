@@ -18,7 +18,5 @@ public class UserResouce {
 		
 	}
 	
-
 }
 
-//Controlador Rest que responde no caminho /users
