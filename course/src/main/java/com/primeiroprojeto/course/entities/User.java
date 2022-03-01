@@ -1,14 +1,21 @@
 package com.primeiroprojeto.course.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Table(name= "tb_user")
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -21,7 +28,12 @@ public class User implements Serializable {
 	private String telefone;
 	private String senha;
 	
-	public User() {		// Quando se usa framework é necessário colocar o construtor vazio
+	@JsonIgnore
+	@OneToMany(mappedBy = "cliente")
+	private List<Order>encomendas = new ArrayList<>();
+	
+	
+	public User() {		
 	}
 
 	public User(Long id, String nome, String email, String telefone, String senha) {
@@ -72,6 +84,9 @@ public class User implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	public List<Order> getEncomendas() {
+		return encomendas;
+	}
 
 	@Override
 	public int hashCode() {
@@ -89,5 +104,7 @@ public class User implements Serializable {
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
+
+
 
 }
